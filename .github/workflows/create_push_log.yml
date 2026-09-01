@@ -3,26 +3,25 @@ name: Create Push Log
 on: push
 
 jobs:
+  create-log:
+    name: create-log
+    runs-on: ubuntu-latest
 
-	name: create-log
-		
-	runs-on: ubuntu-latest
-		steps:
-			- name: Checkout repository
-				uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-			- name: Create push log
-				run: |
-					mkdir -p logs
-					echo "Push by $GITHUB_ACTOR at $(date --iso-8601=seconds)" >> logs/push.log
-					echo "Repository: $GITHUB_REPOSITORY" >> logs/push.log
-					echo "Ref: $GITHUB_REF" >> logs/push.log
-					echo "SHA: $GITHUB_SHA" >> logs/push.log
-					echo "------------------------" >> logs/push.log
+      - name: Create push log
+        run: |
+          mkdir -p logs
+          echo "Push by $GITHUB_ACTOR at $(date --iso-8601=seconds)" >> logs/push.log
+          echo "Repository: $GITHUB_REPOSITORY" >> logs/push.log
+          echo "Ref: $GITHUB_REF" >> logs/push.log
+          echo "SHA: $GITHUB_SHA" >> logs/push.log
+          echo "------------------------" >> logs/push.log
 
-			- name: Upload push log artifact
-				uses: actions/upload-artifact@v4
-				with:
-					name: push-log
-					path: logs/push.log
-
+      - name: Upload push log artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: push-log
+          path: logs/push.log
